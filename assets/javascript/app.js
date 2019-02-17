@@ -8,73 +8,73 @@ var timeRemaining = 60;
 //2. questions and answers index
 //2.1 questions string
 //2.2 answer array
-var indexQandA = 0;
+indexQandA;
 var gameQA = [{
         question: "1. What Manhattan neighbourhood did Jerry reside in?"
-        answer: ["a. Lower East Side", "b. Upper East Side", "c. Upper West Side", "d. Soho"]
-        correctA: "2"
+        answers: ["a. Lower East Side", "b. Upper East Side", "c. Upper West Side", "d. Soho"]
+        correctAnswer: "b. Upper East Side"
         video:
         }, 
 
     {
         question: "2. What is the name of the coffee shop the gang hangs out in?"
-        answer: ["a. Katz Deli", "b. Charlie's", "c. Monk's", "d. Starbucks"]
+        answers: ["a. Katz Deli", "b. Charlie's", "c. Monk's", "d. Starbucks"]
         correctA: "2"
         video:
         },
 
     {
         question: "3. What phrase does Lloyd Braun tell George caused his breakdown?"
-        answer: ["a. Yada Yada Yada", "b. Serenity Now!", "c. Grow up!", "d. Hoochie Mama"]
+        answers: ["a. Yada Yada Yada", "b. Serenity Now!", "c. Grow up!", "d. Hoochie Mama"]
         correctA: "3"
         video:
         },
 
     {
         question: "4. What movie was Jerry caught making out in??"
-        answer: ["a. Rochelle, Rochelle", "b. Sack Lunch", "c. Schlinder's List", "d. Chunnel"]
+        answers: ["a. Rochelle, Rochelle", "b. Sack Lunch", "c. Schlinder's List", "d. Chunnel"]
         correctA: "2"
         video:
         },
 
     {
         question: "5. What is Kramer's first name?"
-        answer: ["a. Cosmo", "b. Charlie", "c. Casper", "d. Costcos"]
+        answers: ["a. Cosmo", "b. Charlie", "c. Casper", "d. Costcos"]
         correctA: "0"
         video:
         },
 
     {
         question: "6. Who is Jerry's nemisis in his building?"
-        answer: ["a. Kramer", "b. Manny", "c. Newman", "d. Building manager"]
+        answers: ["a. Kramer", "b. Manny", "c. Newman", "d. Building manager"]
         correctA: "2"
         video:
         },
 
     {
         question: "7. What does Kramer do for a living?"
-        answer: ["a. Mailman", "b. Banker", "c. TV Host", "d. No one really knows"]
+        answers: ["a. Mailman", "b. Banker", "c. TV Host", "d. No one really knows"]
         correctA: "3"
         video:
         },
 
     {
         question: "8. When George and Jerry write a pilot for NBC, what is it about?"
-        answer: ["a. Living in New York City", "b. Dating", "c. Nothing", "d. College"]
+        answers: ["a. Living in New York City", "b. Dating", "c. Nothing", "d. College"]
         correctA: "2"
         video:
         },
 
     {
         question: "9. What is Elaine's surname?"
-        answer: ["a. Benes", "b. Bernstein", "c. Smith", "d. Perez"]
+        answers: ["a. Benes", "b. Bernstein", "c. Smith", "d. Perez"]
         correctA: "0"
         video:
         },
 
     {
         question: "10. If someone upsets the 'Soup Nazi', what does he yell?"
-        answer: ["a. Get out!", "b. No soup for you! NEXT!", "c. You go home!", "d. Goodbye!"]
+        answers: ["a. Get out!", "b. No soup for you! NEXT!", "c. You go home!", "d. Goodbye!"]
         correctA: "1"
         video:
         },
@@ -125,29 +125,30 @@ function stopTimer() {
     timeRemaining = 60;
 }
 
-//4. if player picks correct answer, increment correctAnswer counter
+//4. if player picks correct answer, increment correctAnswer counter, reset game
 function correctAnswer() {
-    correctAnswers++;
+    correctAnswer++;
     $('#timeRemaining').text("That's CORRECT!")
     resetGame();
 }
 
-//5. if player picks incorrect answer, increment incorrectAnswer counter
+//5. if player picks incorrect answer, increment incorrectAnswer counter, reset game
 function incorrectAnswer() {
-    incorrectAnswers++;
-    $('#timeRemaining').text("That's incorrect. Try Again.")
+    incorrectAnswer++;
+    $('#timeRemaining').text("That's incorrect.")
     resetGame();
 }
 
-//4.1 a separate screen will show all done 
-//4.2 display scoreboard - correct, incorrect answers and unanswered questions
+//6. if player did not answer any questions, increment unansweredQ counter, reset game
+function unansweredQ {
+    unansweredQ++;
+    $('#timeRemaining').text("Unanswered questions")
+    resetGame();
+} 
 
-//5. alternatively user can press submit if they finish early
-
-
-
-$('.startButton').click, function () {
-    $('.startButton');
-    startGame();
+//7. reset game
+//7.1 a separate screen will show all done 
+//7.2 display scoreboard - correct, incorrect answers and unanswered questions
+function resetGame() {
+    
 }
-
