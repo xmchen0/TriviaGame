@@ -1,15 +1,14 @@
 /* UofT Bootcamp 2019 - Trivia Game */
 
-$(document).ready(function () {
-
 /// ********** GLOBAL VARIABLE **********
 
 //1. timer - total 60 seconds before timesout
 var timeRemaining = 60; 
 
-//2. questions and answers
+//2. questions and answers index
 //2.1 questions string
 //2.2 answer array
+var indexQandA = 0;
 var gameQA = [{
         question: "1. What Manhattan neighbourhood did Jerry reside in?"
         answer: ["a. Lower East Side", "b. Upper East Side", "c. Upper West Side", "d. Soho"]
@@ -89,36 +88,66 @@ var correctAnswer = 0;
 //2.4 incorrect answer 
 var incorrectAnswer = 0;
 
-//2.5 unanswered
+//2.5 unanswered questions
 var unansweredQ = 0;
 
 /// ********** FUNCTIONS **********
 
-//1. start screen, remove start button, execute game
+//1. start game screen, remove start button, set timer, load questions ansd answer choices
 function startGame() {
-    $('.start-button').remove();
-    correctAnswers = 0;
-    incorrectAnswers = 0;
-    unansweredQuestions = 0;
-    loadQA();
+    $("#start-button").attr("disabled", true);
+    correctAnswer = 0;
+    incorrectAnswer = 0;
+    unansweredQ= 0;
+    timeRemaining = 60;
+    countDown = setInterval(timer, 1000);
+    gameQA;
 }
 
-//2. counter starts countdown set at 60 seconds, load questions and answers
+//2. counter starts countdown set at 60 seconds,
+//2.1 if timer is less than or equals zero, stop timer and alert player time's up
+//2.2 reactivate start button
+function timer() {
+    timeRemaining--;
+    $("#timeRemaining").text(timeRemaining);
+    if (timeRemaining <= 0) {
+        stopTimer();
+        window.alert("Sorry, time's up!");
+        $("#start-button").attr("disabled", false);
+    }
+}
 
+//3. when time remaining hits zero, reset the counter back to 60 seconds
+function stopTimer() {
+    clearInterval(countDown);
+    $('#questions').text("Correct answer: " + gameQA[indexQandA].answer[correctA]);
+    unansweredQ();
+    timeRemaining = 60;
+}
 
+//4. if player picks correct answer, increment correctAnswer counter
+function correctAnswer() {
+    correctAnswers++;
+    $('#timeRemaining').text("That's CORRECT!")
+    resetGame();
+}
 
-//3. user selects a multiple choice answer, only 1 answer per question
+//5. if player picks incorrect answer, increment incorrectAnswer counter
+function incorrectAnswer() {
+    incorrectAnswers++;
+    $('#timeRemaining').text("That's incorrect. Try Again.")
+    resetGame();
+}
 
-//4. when time remaining hits zero, 
 //4.1 a separate screen will show all done 
 //4.2 display scoreboard - correct, incorrect answers and unanswered questions
 
-//5. alternatively user can press done if they finish early
+//5. alternatively user can press submit if they finish early
 
 
 
 $('.startButton').click, function () {
     $('.startButton');
     startGame();
+}
 
-});
