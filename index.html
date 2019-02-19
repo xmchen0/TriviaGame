@@ -19,40 +19,44 @@
 
 <body>
     <div id="background">
-    <!--Start Screen-->
-    <div id="start-screen">
-        <section class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12">
-              <div class="jumbotron">
 
-                <!--Heading-->
-                <h1>Seinfeld Trivia Game</h1> 
+    <!--Start Screen-->
+    <section class="row">
+        <div class="jumbotron col-md-8 col-md-offset-2 text-center">
+
+            <!--Heading-->
+            <div id="wrapper">
+                <h1>Seinfeld Trivia</h1> 
                 <h2>Test your Seinfeld IQ</h2>
-                <h4>You have 60 seconds to answer 10 questions. 
+                <h4>You have 2 minutes to answer 10 questions. 
                     There are 4 answer choices and you must pick only 1. 
                     Try answer all questions. 
-                    When you click start the timer will begin ticking.</h4>
-
-                <!--Timer-->
-                <h5 class="timeRemaining"></h5>
-
-                <!--Questions and Answer Choices-->
-                <h3 class="questions"></h3>
-                <div class="answers"></div>
-
-                <!--Start Button-->
-                <p class="start-button text-center">
-                <a class="btn btn-primary btn-lg" href="#" role="button">Start</a>
-                </p>
-              </div>
+                    When you click start the timer will begin ticking.
+                    Good luck and have fun!
+                </h4>
             </div>
-          </section>
+
+            <!--Start Button-->
+            <p id="startButton col-md-8 col-md-offset-2 text-center">
+                <a class="btn btn-primary btn-lg" href="#" role="button" form="quiz">Start</a>
+            </p>
+
+            <div id="subwrapper">
+                <!--Timer-->
+                <h5 id="timeRemaining"></h5>
+                <!--Questions and Answer Choices-->
+                <div id="quiz"></div>
+            </div>
+            
+        </div>
+    </section>
+
     </div>
 
     </div>
 
     <!--Footer-->
-    <footer id="footer">
+    <footer class="footer navbar-fixed-bottom text-center">
         <p>© 2019 Xiao Mei (Kathy) Chen</p>
     </footer>
 

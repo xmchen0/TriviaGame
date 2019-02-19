@@ -1,154 +1,188 @@
-/* UofT Bootcamp 2019 - Trivia Game */
+/* 
 
-/// ********** GLOBAL VARIABLE **********
+UofT Bootcamp 2019 -- Trivia Game 
 
-//1. timer - total 60 seconds before timesout
-var timeRemaining = 60; 
+Spoiler Alert: The following code contains answers to questions in the game
 
-//2. questions and answers index
-//2.1 questions string
-//2.2 answer array
-indexQandA;
-var gameQA = [{
-        question: "1. What Manhattan neighbourhood did Jerry reside in?"
-        answers: ["a. Lower East Side", "b. Upper East Side", "c. Upper West Side", "d. Soho"]
-        correctAnswer: "b. Upper East Side"
-        video:
-        }, 
+Image Credits: TwentyTwoWords, https://twentytwowords.com/40-of-the-best-seinfeld-quotes-fans-still-use-today/
 
+*/
+
+
+/// GLOBAL VARIABLE
+//==========================================================================================================================
+
+//1. declare variable for timer - total 120 seconds (2 minutes)
+var timer;
+var timeRemaining = 120; 
+
+//2. declare variable for array storing questions, possible answers arrays, correct answer index, and images
+var correct = false;
+var questions = [
     {
-        question: "2. What is the name of the coffee shop the gang hangs out in?"
-        answers: ["a. Katz Deli", "b. Charlie's", "c. Monk's", "d. Starbucks"]
-        correctA: "2"
-        video:
-        },
-
+        question: "1. Well the jerk store called, they're running out of you!",
+        answers: ["Jerry Seinfeld", "Elaine Benes", "George Constanza", "Cosmo Kramer"],
+        correctAnswer: 2, // George Constanza
+        image: ("assets/images/Best-Seinfeld-Quotes1.jpg")
+    },
     {
-        question: "3. What phrase does Lloyd Braun tell George caused his breakdown?"
-        answers: ["a. Yada Yada Yada", "b. Serenity Now!", "c. Grow up!", "d. Hoochie Mama"]
-        correctA: "3"
-        video:
-        },
-
+        question: "2. Looking at cleavage is like looking at the sun. You don't stare at it. It's too risky. Ta get a sense of it and then you look away.",
+        answers: ["Jerry Seinfeld", "Elaine Benes", "George Constanza", "Cosmo Kramer"],
+        correctAnswer: 0, // Jerry Seinfeld
+        image: ("assets/images/Best-Seinfeld-Quotes2.jpg")
+    }, 
     {
-        question: "4. What movie was Jerry caught making out in??"
-        answers: ["a. Rochelle, Rochelle", "b. Sack Lunch", "c. Schlinder's List", "d. Chunnel"]
-        correctA: "2"
-        video:
-        },
-
+        question: "3. When you look annoyed all the time, people think that you're busy.",
+        answers: ["Jerry Seinfeld", "Elaine Benes", "George Constanza", "Cosmo Kramer"],
+        correctAnswer: 2, // George Constanza
+        image: ("assets/images/Best-Seinfeld-Quotes3.jpg")
+    }, 
     {
-        question: "5. What is Kramer's first name?"
-        answers: ["a. Cosmo", "b. Charlie", "c. Casper", "d. Costcos"]
-        correctA: "0"
-        video:
-        },
-
+        question: "4. Yada, yada, yada..",
+        answers: ["Jerry Seinfeld", "Elaine Benes", "George Constanza", "Cosmo Kramer"],
+        correctAnswer: 1, // Elaine Benes
+        image: ("assets/images/Best-Seinfeld-Quotes4.jpg")
+    }, 
     {
-        question: "6. Who is Jerry's nemisis in his building?"
-        answers: ["a. Kramer", "b. Manny", "c. Newman", "d. Building manager"]
-        correctA: "2"
-        video:
-        },
-
+        question: "5. It's not a lie if you believe it",
+        answers: ["Jerry Seinfeld", "Elaine Benes", "George Constanza", "Cosmo Kramer"],
+        correctAnswer: 2, // George Constanza
+        image: ("assets/images/Best-Seinfeld-Quotes5.jpg")
+    }, 
     {
-        question: "7. What does Kramer do for a living?"
-        answers: ["a. Mailman", "b. Banker", "c. TV Host", "d. No one really knows"]
-        correctA: "3"
-        video:
-        },
-
+        question: "6. She's one of those low-talkers. You can't hear a word she's saying! You're always going 'excuse me, what was that?'",
+        answers: ["Jerry Seinfeld", "Elaine Benes", "George Constanza", "Cosmo Kramer"],
+        correctAnswer: 0, // Jerry Seinfeld
+        image: ("assets/images/Best-Seinfeld-Quotes6.jpg")
+    }, 
     {
-        question: "8. When George and Jerry write a pilot for NBC, what is it about?"
-        answers: ["a. Living in New York City", "b. Dating", "c. Nothing", "d. College"]
-        correctA: "2"
-        video:
-        },
-
+        question: "7. Who's gonna turn down a Junior Mint? It's chocolate, it's peppermint, it's delicious!",
+        answers: ["Jerry Seinfeld", "Elaine Benes", "George Constanza", "Cosmo Kramer"],
+        correctAnswer: 3, // Cosmo Kramer
+        image: ("assets/images/Best-Seinfeld-Quotes7.jpg")
+    }, 
     {
-        question: "9. What is Elaine's surname?"
-        answers: ["a. Benes", "b. Bernstein", "c. Smith", "d. Perez"]
-        correctA: "0"
-        video:
-        },
-
+        question: "8. Hello, Newman.",
+        answers: ["Jerry Seinfeld", "Elaine Benes", "George Constanza", "Cosmo Kramer"],
+        correctAnswer: 0, // Jerry Seinfeld
+        image: ("assets/images/Best-Seinfeld-Quotes8.jpg")
+    }, 
     {
-        question: "10. If someone upsets the 'Soup Nazi', what does he yell?"
-        answers: ["a. Get out!", "b. No soup for you! NEXT!", "c. You go home!", "d. Goodbye!"]
-        correctA: "1"
-        video:
-        },
+        question: "9. I was in the pool! There was shrinkage!",
+        answers: ["Jerry Seinfeld", "Elaine Benes", "George Constanza", "Cosmo Kramer"],
+        correctAnswer: 2, // George Constanza
+        image: ("assets/images/Best-Seinfeld-Quotes9.jpg")
+    }, 
+    {
+        question: "10. Am I crazy? Or am I just so sane I blew your mind?",
+        answers: ["Jerry Seinfeld", "Elaine Benes", "George Constanza", "Cosmo Kramer"],
+        correctAnswer: 3, // Cosmo Kramer
+        image: ("assets/images/Best-Seinfeld-Quotes10.jpg")
+    }
 
-}];
+];
 
-
-//2.3 correct answer
+//3. declare variables for score-keeping
+//3.1 correct answer
+//3.2 incorrect answer 
+//3.3 unanswered questions
 var correctAnswer = 0;
-
-//2.4 incorrect answer 
 var incorrectAnswer = 0;
+var unansweredQuestion = 0;
 
-//2.5 unanswered questions
-var unansweredQ = 0;
+//4. declare variable for quiz area
+var panel = $(".quiz");
 
-/// ********** FUNCTIONS **********
+/// FUNCTIONS
+//==========================================================================================================================
 
-//1. start game screen, remove start button, set timer, load questions ansd answer choices
+//1. when game screen appears, hide start button
+//1.1 start game screen, set timer countdown, load questions ansd answer choices
+$(".startButton").on("click", function () {
+    $('.startButton').hide();
+    startGame();
+});
+
 function startGame() {
-    $("#start-button").attr("disabled", true);
     correctAnswer = 0;
     incorrectAnswer = 0;
-    unansweredQ= 0;
-    timeRemaining = 60;
+    unansweredQuestion = 0;
+    timeRemaining = 120;
     countDown = setInterval(timer, 1000);
-    gameQA;
+    displayQuestion();
 }
 
-//2. counter starts countdown set at 60 seconds,
-//2.1 if timer is less than or equals zero, stop timer and alert player time's up
-//2.2 reactivate start button
+//2. counter starts countdown set at 120 seconds,
+//2.1 if timer is less than or equals zero, stop timer and alert player time's up and reactivate start button
 function timer() {
     timeRemaining--;
-    $("#timeRemaining").text(timeRemaining);
+    $(".timeRemaining").text('Time Remaining: ' + timeRemaining + ' seconds');    
     if (timeRemaining <= 0) {
         stopTimer();
-        window.alert("Sorry, time's up!");
-        $("#start-button").attr("disabled", false);
+        window.alert("Time up!");
+        checkAnswers();
     }
 }
 
-//3. when time remaining hits zero, reset the counter back to 60 seconds
+//3. when time remaining hits zero, displays correct answer and reset the counter back to 120 seconds
 function stopTimer() {
     clearInterval(countDown);
-    $('#questions').text("Correct answer: " + gameQA[indexQandA].answer[correctA]);
-    unansweredQ();
-    timeRemaining = 60;
+    $('.questions').text("The Correct Answer is: " + questions[index].answer[correctAnswer]);
 }
 
-//4. if player picks correct answer, increment correctAnswer counter, reset game
+//4. load questions and answer choices
+function displayQuestion(index){
+    // loop through questions
+    for (var i = 0; i < questions.length; i++) {
+        panel.append("<h2>" + questions[i].question + "</h2>");
+    // loop through answers
+    for (var j = 0; j < questions[i].answers.length; j++) {
+        panel.append('<input type="radio" name="question' + '-' + i + '" value="' + questions[i].answers[j] + '">' + questions[i].answers[j]);
+        }
+    }
+    // 
+    panel.append('<button id="done">Done</button>');
+}
+
+//5. check answer, display results, display scoreboard - correct, incorrect answers and unanswered questions
+function checkAnswers () {
+	for (var i = 0; i < questions.length; i++) {
+		if (isCorrect(questions[i])) {
+			correctAnswer++;
+		} else if (checkAnswered(questions[i])) {
+			incorrectAnswer++;
+		} else {
+			unansweredQuestion++;
+		}
+    }
+    $('.results').html('correct: ' + correctAnswer + "<br>" + 'incorrect: ' + incorrectAnswer + "<br>" + 'unanswered: ' + unansweredQuestion);
+}
+
+//6. if player picks correct answer, increment correctAnswer counter, reset game
 function correctAnswer() {
     correctAnswer++;
-    $('#timeRemaining').text("That's CORRECT!")
+    $('#timeRemaining').text("That's CORRECT! Well done, Schmoopie!")
     resetGame();
 }
 
-//5. if player picks incorrect answer, increment incorrectAnswer counter, reset game
+//7. if player picks incorrect answer, increment incorrectAnswer counter, reset game
 function incorrectAnswer() {
     incorrectAnswer++;
-    $('#timeRemaining').text("That's incorrect.")
+    $('#timeRemaining').text("That's incorrect. No Soup For You!")
     resetGame();
 }
 
-//6. if player did not answer any questions, increment unansweredQ counter, reset game
-function unansweredQ {
-    unansweredQ++;
-    $('#timeRemaining').text("Unanswered questions")
+//8. if player did not answer any questions, increment unansweredQ counter, reset game
+function unansweredQuestion {
+    unansweredQuestion++;
+    $('#timeRemaining').text("Unanswered questions.")
     resetGame();
 } 
 
-//7. reset game
-//7.1 a separate screen will show all done 
-//7.2 display scoreboard - correct, incorrect answers and unanswered questions
+//9. reset game
 function resetGame() {
-    
+    $("#start-button").attr("disabled", false);
+    correctAnswer = 0;
+    incorrectAnswer = 0;
+    unansweredQuestion = 0;
 }
