@@ -93,6 +93,7 @@ var unansweredQuestion = 0;
 //4. declare variable for quiz area
 var panel = $(".quiz");
 
+
 /// FUNCTIONS
 //==========================================================================================================================
 
@@ -140,7 +141,7 @@ function displayQuestion(index){
         panel.append('<input type="radio" name="question' + '-' + i + '" value="' + questions[i].answers[j] + '">' + questions[i].answers[j]);
         }
     }
-    // 
+    // done button 
     panel.append('<button id="done">Done</button>');
 }
 
@@ -149,7 +150,7 @@ function checkAnswers () {
 	for (var i = 0; i < questions.length; i++) {
 		if (isCorrect(questions[i])) {
 			correctAnswer++;
-		} else if (checkAnswered(questions[i])) {
+		} else if (checkAnswers(questions[i])) {
 			incorrectAnswer++;
 		} else {
 			unansweredQuestion++;
@@ -161,28 +162,30 @@ function checkAnswers () {
 //6. if player picks correct answer, increment correctAnswer counter, reset game
 function correctAnswer() {
     correctAnswer++;
-    $('#timeRemaining').text("That's CORRECT! Well done, Schmoopie!")
+    $('.timeRemaining').text("That's CORRECT! Well done.")
     resetGame();
 }
 
 //7. if player picks incorrect answer, increment incorrectAnswer counter, reset game
 function incorrectAnswer() {
     incorrectAnswer++;
-    $('#timeRemaining').text("That's incorrect. No Soup For You!")
+    $('.timeRemaining').text("That's incorrect. No Soup For You!")
     resetGame();
 }
 
 //8. if player did not answer any questions, increment unansweredQ counter, reset game
 function unansweredQuestion {
     unansweredQuestion++;
-    $('#timeRemaining').text("Unanswered questions.")
+    $('.timeRemaining').text("Unanswered questions.")
     resetGame();
 } 
 
 //9. reset game
 function resetGame() {
-    $("#start-button").attr("disabled", false);
     correctAnswer = 0;
     incorrectAnswer = 0;
     unansweredQuestion = 0;
+    timeRemaining = 120;
+    countDown = setInterval(timer, 1000);
+    displayQuestion();
 }
