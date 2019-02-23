@@ -2,190 +2,183 @@
 
 UofT Bootcamp 2019 -- Trivia Game 
 
-Spoiler Alert: The following code contains answers to questions in the game
-
-Image Credits: TwentyTwoWords, https://twentytwowords.com/40-of-the-best-seinfeld-quotes-fans-still-use-today/
+Pseudocode (initial logic):
+- on screen load, hide content and show start button
+- set timer countdown, load questions ansd answer choices
+- counter starts countdown set at 100 seconds,
+- if timer is less than or equals zero, stop timer and alert player time's up and reactivate start button
+- when time hits zero, displays correct answer and reset the counter back to 100 seconds
+- load questions and answer choices upon click event
+- check answer, display results, display scoreboard - correct, incorrect answers and unanswered questions
+- if player picks correct answer, increment correctAnswer counter, reset game
+- if player picks incorrect answer, increment wrongAnswer counter, reset game
+- if player did not answer any questions, increment unanswered counter, reset game
+- reset game
 
 */
 
+$(document).ready(function ($) {
 
-/// GLOBAL VARIABLE
-//==========================================================================================================================
+    /// GLOBAL VARIABLES
+    //=========================================================================================================
 
-//1. declare variable for timer - total 120 seconds (2 minutes)
-var timer;
-var timeRemaining = 120; 
+    //1. Declare variables for timer
+    var counter;
+    var counterInterval;
+    var counterRunning = false;
 
-//2. declare variable for array storing questions, possible answers arrays, correct answer index, and images
-var correct = false;
-var questions = [
-    {
-        question: "1. Well the jerk store called, they're running out of you!",
-        answers: ["Jerry Seinfeld", "Elaine Benes", "George Constanza", "Cosmo Kramer"],
-        correctAnswer: 2, // George Constanza
-        image: ("assets/images/Best-Seinfeld-Quotes1.jpg")
-    },
-    {
-        question: "2. Looking at cleavage is like looking at the sun. You don't stare at it. It's too risky. Ta get a sense of it and then you look away.",
-        answers: ["Jerry Seinfeld", "Elaine Benes", "George Constanza", "Cosmo Kramer"],
-        correctAnswer: 0, // Jerry Seinfeld
-        image: ("assets/images/Best-Seinfeld-Quotes2.jpg")
-    }, 
-    {
-        question: "3. When you look annoyed all the time, people think that you're busy.",
-        answers: ["Jerry Seinfeld", "Elaine Benes", "George Constanza", "Cosmo Kramer"],
-        correctAnswer: 2, // George Constanza
-        image: ("assets/images/Best-Seinfeld-Quotes3.jpg")
-    }, 
-    {
-        question: "4. Yada, yada, yada..",
-        answers: ["Jerry Seinfeld", "Elaine Benes", "George Constanza", "Cosmo Kramer"],
-        correctAnswer: 1, // Elaine Benes
-        image: ("assets/images/Best-Seinfeld-Quotes4.jpg")
-    }, 
-    {
-        question: "5. It's not a lie if you believe it",
-        answers: ["Jerry Seinfeld", "Elaine Benes", "George Constanza", "Cosmo Kramer"],
-        correctAnswer: 2, // George Constanza
-        image: ("assets/images/Best-Seinfeld-Quotes5.jpg")
-    }, 
-    {
-        question: "6. She's one of those low-talkers. You can't hear a word she's saying! You're always going 'excuse me, what was that?'",
-        answers: ["Jerry Seinfeld", "Elaine Benes", "George Constanza", "Cosmo Kramer"],
-        correctAnswer: 0, // Jerry Seinfeld
-        image: ("assets/images/Best-Seinfeld-Quotes6.jpg")
-    }, 
-    {
-        question: "7. Who's gonna turn down a Junior Mint? It's chocolate, it's peppermint, it's delicious!",
-        answers: ["Jerry Seinfeld", "Elaine Benes", "George Constanza", "Cosmo Kramer"],
-        correctAnswer: 3, // Cosmo Kramer
-        image: ("assets/images/Best-Seinfeld-Quotes7.jpg")
-    }, 
-    {
-        question: "8. Hello, Newman.",
-        answers: ["Jerry Seinfeld", "Elaine Benes", "George Constanza", "Cosmo Kramer"],
-        correctAnswer: 0, // Jerry Seinfeld
-        image: ("assets/images/Best-Seinfeld-Quotes8.jpg")
-    }, 
-    {
-        question: "9. I was in the pool! There was shrinkage!",
-        answers: ["Jerry Seinfeld", "Elaine Benes", "George Constanza", "Cosmo Kramer"],
-        correctAnswer: 2, // George Constanza
-        image: ("assets/images/Best-Seinfeld-Quotes9.jpg")
-    }, 
-    {
-        question: "10. Am I crazy? Or am I just so sane I blew your mind?",
-        answers: ["Jerry Seinfeld", "Elaine Benes", "George Constanza", "Cosmo Kramer"],
-        correctAnswer: 3, // Cosmo Kramer
-        image: ("assets/images/Best-Seinfeld-Quotes10.jpg")
+    //2. Declare variables for quiz counter
+    var questionCounter = 0;
+    var correctAnswer = 0;
+    var wrongAnswer = 0;
+    var unanswered = 0;
+
+    //3. Declare variables for question 
+    var questions;
+    var currentQuestion;
+
+
+    /// LOAD JSON
+    //=========================================================================================================
+
+    //1. Load questions from json file
+    $.getJSON('https://api.myjson.com/bins/15ht7i') /*---experimenting temporary storage of json file on web---*/
+        .done(function (data) {
+            questions = data;
+        })
+        .fail(function () {
+            console.log('something went wrong');
+        });
+
+
+    /// FUNCTIONS
+    //=========================================================================================================
+
+    //1. Hide div on load
+    $('#trivia-game, #scores').hide();
+
+    //2. When you click #btn-start-game
+    $(document).on('click', '.btn-start-game', function () {
+        $('#start-game').hide();
+        $('#trivia-game').show();
+        displayQuestion();
+    });
+
+    //3. When answer is clicked
+    $(document).on('click', '.answer', function () {
+        $(this).addClass('btn-active');
+        var guess = $(this).text();
+        checkGuess(guess, currentQuestion);
+    });
+
+    //4. Generates each question
+    function displayQuestion() {
+
+        //4.1. Call resetCounter function
+        resetCounter();
+
+        //4.2. Check to see if game is over if no more questions
+        if (questionCounter === questions.length) {
+            stopTimer();
+            showScore();
+            return;
+        }
+
+        //4.3. Setup currentQuestion
+        currentQuestion = questions[questionCounter];
+
+        //4.4. Run startTimer function every second if not currently running
+        if (!counterRunning) {
+            counterInterval = setInterval(startTimer, 1000);
+            counterRunning = true;
+        }
+
+        //4.5. Run function to display current question
+        displayCurrentQuestion(currentQuestion);
+
     }
 
-];
-
-//3. declare variables for score-keeping
-//3.1 correct answer
-//3.2 incorrect answer 
-//3.3 unanswered questions
-var correctAnswer = 0;
-var incorrectAnswer = 0;
-var unansweredQuestion = 0;
-
-//4. declare variable for quiz area
-var panel = $(".quiz");
-
-
-/// FUNCTIONS
-//==========================================================================================================================
-
-//1. when game screen appears, hide start button
-//1.1 start game screen, set timer countdown, load questions ansd answer choices
-$(".startButton").on("click", function () {
-    $('.startButton').hide();
-    startGame();
-});
-
-function startGame() {
-    correctAnswer = 0;
-    incorrectAnswer = 0;
-    unansweredQuestion = 0;
-    timeRemaining = 120;
-    countDown = setInterval(timer, 1000);
-    displayQuestion();
-}
-
-//2. counter starts countdown set at 120 seconds,
-//2.1 if timer is less than or equals zero, stop timer and alert player time's up and reactivate start button
-function timer() {
-    timeRemaining--;
-    $(".timeRemaining").text('Time Remaining: ' + timeRemaining + ' seconds');    
-    if (timeRemaining <= 0) {
-        stopTimer();
-        window.alert("Time up!");
-        checkAnswers();
+    //5. Reset Counter function
+    function resetCounter() {
+        counter = 10;
+        $('#right-answer, #wrong-answer, #time-out').hide();
+        $('#timer-interval').html(counter);
     }
-}
 
-//3. when time remaining hits zero, displays correct answer and reset the counter back to 120 seconds
-function stopTimer() {
-    clearInterval(countDown);
-    $('.questions').text("The Correct Answer is: " + questions[index].answer[correctAnswer]);
-}
+    //6. Display current question and answer choices
+    function displayCurrentQuestion(question) {
+        $('#trivia-game');
+        $('#question').text(question.question);
+        $('#answers').empty();
 
-//4. load questions and answer choices
-function displayQuestion(index){
-    // loop through questions
-    for (var i = 0; i < questions.length; i++) {
-        panel.append("<h2>" + questions[i].question + "</h2>");
-    // loop through answers
-    for (var j = 0; j < questions[i].answers.length; j++) {
-        panel.append('<input type="radio" name="question' + '-' + i + '" value="' + questions[i].answers[j] + '">' + questions[i].answers[j]);
+        $.each(question.choices, function (index, item) {
+            var answerDiv = $('<div class="answer btn btn-answer">').text(item);
+            $('#answers').append(answerDiv);
+        });
+
+    }
+
+    //7. Starts Timer
+    function startTimer() {
+        counter--;
+        $('#timer-interval').html(counter);
+
+        if (counter === 0) {
+            unanswered++;
+            $('#time-out').show().text('Time Up. No Soup For You!');
+            nextQuestion();
         }
     }
-    // done button 
-    panel.append('<button id="done">Done</button>');
-}
 
-//5. check answer, display results, display scoreboard - correct, incorrect answers and unanswered questions
-function checkAnswers () {
-	for (var i = 0; i < questions.length; i++) {
-		if (isCorrect(questions[i])) {
-			correctAnswer++;
-		} else if (checkAnswers(questions[i])) {
-			incorrectAnswer++;
-		} else {
-			unansweredQuestion++;
-		}
+    //8. Stops Timer
+    function stopTimer() {
+        clearInterval(counterInterval);
+        counterRunning = false;
     }
-    $('.results').html('correct: ' + correctAnswer + "<br>" + 'incorrect: ' + incorrectAnswer + "<br>" + 'unanswered: ' + unansweredQuestion);
-}
 
-//6. if player picks correct answer, increment correctAnswer counter, reset game
-function correctAnswer() {
-    correctAnswer++;
-    $('.timeRemaining').text("That's CORRECT! Well done.")
-    resetGame();
-}
+    //9. Checks if guess is correct
+    function checkGuess(guess, question) {
+        var correctNumber = question.correctAnswer;
+        var correct = question.choices[correctNumber];
 
-//7. if player picks incorrect answer, increment incorrectAnswer counter, reset game
-function incorrectAnswer() {
-    incorrectAnswer++;
-    $('.timeRemaining').text("That's incorrect. No Soup For You!")
-    resetGame();
-}
+        //9.1. Shows #right-answer/#wrong-answer div depending on guess
+        if (guess === correct) {
+            correctAnswer++;
+            $('#right-answer').show();
+            $('#right-answer').text("That's CORRECT!");
+        } else {
+            wrongAnswer++;
+            $('#wrong-answer').show();
+            $('#wrong-answer').text("That's WRONG! The correct answer is: " + correct);
+        }
 
-//8. if player did not answer any questions, increment unansweredQ counter, reset game
-function unansweredQuestion {
-    unansweredQuestion++;
-    $('.timeRemaining').text("Unanswered questions.")
-    resetGame();
-} 
+        nextQuestion();
 
-//9. reset game
-function resetGame() {
-    correctAnswer = 0;
-    incorrectAnswer = 0;
-    unansweredQuestion = 0;
-    timeRemaining = 120;
-    countDown = setInterval(timer, 1000);
-    displayQuestion();
-}
+    }
+
+    //10. Show the next question in questions array
+    function nextQuestion() {
+        stopTimer();
+        questionCounter++;
+        setTimeout(displayQuestion, 2000);
+    }
+
+    //11. Show Score
+    function showScore() {
+
+        $('.trivia-logo').text('Final Score');
+        $('#start-game, #scores').show();
+        $('#trivia-game').hide();
+
+        $('.wrong-answer span').text(wrongAnswer);
+        $('.right-answer span').text(correctAnswer);
+        $('.time-out span').text(unanswered);
+
+        questionCounter = 0;
+        correctAnswer = 0;
+        wrongAnswer = 0;
+        unanswered = 0;
+
+    }
+
+});

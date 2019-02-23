@@ -6,72 +6,70 @@
     <title>Trivia Quiz :: A Javascript Game</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--Link to CSS-->
-    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
     <!--Link to Google Fonts-->
     <link href="https://fonts.googleapis.com/css?family=Lato|Sacramento" rel="stylesheet">
-    <!--Link to Bootstrap-->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+     <!--Link to Bootstrap-->
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <!--Link to jQuery Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <!--Link to Bootstrap Library-->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <!--Link to JavaScript File-->
+    <script src="assets/javascript/app.js" type="text/javascript"></script>
+    <!--Link to JSON file-->
+    <script src="assets/javascript/questions.json" type="text/javascript"></script>
 </head>
 
 <body>
-    <div id="background">
-
-    <!--Start Screen-->
-    <section class="row">
-        <div class="jumbotron col-md-8 col-md-offset-2 text-center">
-
-            <!--Heading-->
-            <div id="wrapper">
-                <h1>Seinfeld Trivia</h1> 
-                <h2>Test your Seinfeld IQ</h2>
-                <h4>You have 2 minutes to answer 10 questions. 
-                    There are 4 answer choices and you must pick only 1. 
-                    Try answer all questions. 
-                    When you click start the timer will begin ticking.
-                    Good luck and have fun!
+    <div class="container">
+        <!--Heading-->
+        <div id="start-game" class="trivia-container">
+            <div class="trivia-header">
+                <h1 class="trivia-logo">Seinfeld Trivia <br> Test your Seinfeld IQ</h1>
+            </div>
+            <!--Instructions-->
+            <div id="instructions">
+                <h4>Guess who said this memorable quote from Seinfeld. <br>
+                    Total number of questions: 10. <br>
+                    You have 10 seconds to answer each question. <br>
+                    There are 4 answer choices and you must only pick 1. <br>
+                    Try answer all questions. <br>
+                    Final scores will be displayed at the end of the quiz. <br>
+                    When you click "Start Game" the timer will begin ticking and Q+A will on load. <br>
+                    Good luck and have fun! <br>
                 </h4>
             </div>
-
-            <!--Start Button-->
-            <p id="startButton col-md-8 col-md-offset-2 text-center">
-                <a class="btn btn-primary btn-lg" href="#" role="button" form="quiz">Start</a>
-            </p>
-
-            <div id="subwrapper">
-                <!--Timer-->
-                <h5 id="timeRemaining"></h5>
-                <!--Questions and Answer Choices-->
-                <div id="quiz"></div>
+            <!--Scoreboard Counter-->
+            <div class="trivia-body">
+                <div id="scores">
+                    <div class="score wrong-answer">Wrong Answers: <span>0</span></div>
+                    <div class="score right-answer">Correct Answers: <span>0</span></div>
+                    <div class="score time-out">Unanswered: <span>0</span></div>
+                </div>
+                <div id="btn-start-game" class="btn btn-start-game">Start Game</div>
             </div>
-
-            <!--Done Button-->
-            <button id="doneButton col-md-8 col-md-offset-2 text-center">Done</button>
-            
-            <!--Game Over Message-->
-	        <div id="message"></div>
-            
-            <!--Score Results-->
-	        <div id="results"></div>
-
         </div>
-    </section>
-
+        <!--Trivia Q and A-->
+        <div id="trivia-game" class="trivia-container">
+            <div class="trivia-header">
+                <h1 id="question"></h1>
+                <h3 id="answers"></h3>
+                <!--Timer-->
+                <div id="timer" class="timer">
+                    <div>Time Remaining:</div>
+                    <div id="timer-interval" class="timer-interval">10</div>
+                </div>
+            </div>
+            <!--Results-->
+            <div id="choices" class="trivia-body"></div>
+            <div id="wrong-answer" class="wrong-answer"></div>
+            <div id="right-answer" class="right-answer"></div>
+            <div id="time-out" class="time-out"></div>
+        </div>
     </div>
-
-    </div>
-
     <!--Footer-->
     <footer class="footer navbar-fixed-bottom text-center">
         <p>© 2019 Xiao Mei (Kathy) Chen</p>
     </footer>
-
-<!--Link to JavaScript-->
-<script src="./assets/javascript/app.js" type="text/javascript"></script>
-
 </body>
 
 </html>

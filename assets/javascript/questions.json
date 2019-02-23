@@ -1,0 +1,103 @@
+[
+    {
+        "question": "1. Well the jerk store called, they're running out of you!",
+        "choices": [
+            "Jerry Seinfeld",
+            "Elaine Benes",
+            "George Constanza",
+            "Cosmo Kramer"
+        ],
+        "correctAnswer": 2 // George Constanza
+    },
+    {
+        "question": "2. Looking at cleavage is like looking at the sun. You don't stare at it. It's too risky. You get a sense of it and then you look away.",
+        "choices": [
+            "Jerry Seinfeld",
+            "Elaine Benes",
+            "George Constanza",
+            "Cosmo Kramer"
+        ],
+        "correctAnswer": 0 // Jerry Seinfeld
+    },
+    {
+        "question": "3. When you look annoyed all the time, people think that you're busy.",
+        "choices": [
+            "Jerry Seinfeld",
+            "Elaine Benes",
+            "George Constanza",
+            "Cosmo Kramer"
+        ],
+        "correctAnswer": 2 // George Constanza
+    },
+    {
+        "question": "4. Yada, yada, yada..",
+        "choices": [
+            "Jerry Seinfeld",
+            "Elaine Benes",
+            "George Constanza",
+            "Cosmo Kramer"
+        ],
+        "correctAnswer": 1 // Elaine Benes
+    },
+    {
+        "question": "5. It's not a lie if you believe it",
+        "choices": [
+            "Jerry Seinfeld",
+            "Elaine Benes",
+            "George Constanza",
+            "Cosmo Kramer"
+        ],
+        "correctAnswer": 2 // George Constanza
+    },
+    {
+        "question": "6. She's one of those low-talkers. You can't hear a word she's saying! You're always going 'excuse me, what was that?'",
+        "choices": [
+            "Jerry Seinfeld",
+            "Elaine Benes",
+            "George Constanza",
+            "Cosmo Kramer"
+        ],
+        "correctAnswer": 0 // Jerry Seinfeld
+    },
+    {
+        "question": "7. Who's gonna turn down a Junior Mint? It's chocolate, it's peppermint, it's delicious!",
+        "choices": [
+            "Jerry Seinfeld",
+            "Elaine Benes",
+            "George Constanza",
+            "Cosmo Kramer"
+        ],
+        "correctAnswer": 3 // Cosmo Kramer
+    },
+    {
+        "question": "8. Hello, Newman.",
+        "choices": [
+            "Jerry Seinfeld",
+            "Elaine Benes",
+            "George Constanza",
+            "Cosmo Kramer"
+        ],
+        "correctAnswer": 0 // Jerry Seinfeld
+    },
+    {
+        "question": "9. I was in the pool! There was shrinkage!",
+        "choices": [
+            "Jerry Seinfeld",
+            "Elaine Benes",
+            "George Constanza",
+            "Cosmo Kramer"
+        ],
+        "correctAnswer": 2 // George Constanza
+    },
+    {
+        "question": "10. Am I crazy? Or am I just so sane I blew your mind?",
+        "choices": [
+            "Jerry Seinfeld",
+            "Elaine Benes",
+            "George Constanza",
+            "Cosmo Kramer"
+        ],
+        "correctAnswer": 3 // Cosmo Kramer
+    }
+    
+]
