@@ -5,14 +5,15 @@ UofT Bootcamp 2019 -- Trivia Game
 Pseudocode (initial logic):
 - on screen load, hide content and show start button
 - set timer countdown, load questions ansd answer choices
-- counter starts countdown set at 100 seconds,
+- counter starts countdown set at 100 seconds
 - if timer is less than or equals zero, stop timer and alert player time's up and reactivate start button
 - when time hits zero, displays correct answer and reset the counter back to 100 seconds
 - load questions and answer choices upon click event
-- check answer, display results, display scoreboard - correct, incorrect answers and unanswered questions
-- if player picks correct answer, increment correctAnswer counter, reset game
-- if player picks incorrect answer, increment wrongAnswer counter, reset game
-- if player did not answer any questions, increment unanswered counter, reset game
+- if player picks correct answer, increment correctAnswer counter
+- if player picks incorrect answer, increment wrongAnswer counter
+- if player did not answer any questions, increment unanswered counter
+- check answer, append results
+- display final scores - correct, incorrect answers and unanswered questions
 - reset game
 
 */
@@ -41,7 +42,7 @@ $(document).ready(function ($) {
     /// LOAD JSON
     //=========================================================================================================
 
-    //1. Load questions from json file
+    //1. Load questions from myjson api
     $.getJSON('https://api.myjson.com/bins/15ht7i') /*---experimenting temporary storage of json file on web---*/
         .done(function (data) {
             questions = data;
