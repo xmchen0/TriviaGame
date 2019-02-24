@@ -1,22 +1,6 @@
-/* 
-
-UofT Bootcamp 2019 -- Trivia Game 
-
-Pseudocode (initial logic):
-- on screen load, hide content and show start button
-- set timer countdown, load questions ansd answer choices
-- counter starts countdown set at 100 seconds
-- if timer is less than or equals zero, stop timer and alert player time's up and reactivate start button
-- when time hits zero, displays correct answer and reset the counter back to 100 seconds
-- load questions and answer choices upon click event
-- if player picks correct answer, increment correctAnswer counter
-- if player picks incorrect answer, increment wrongAnswer counter
-- if player did not answer any questions, increment unanswered counter
-- check answer, append results
-- display final scores - correct, incorrect answers and unanswered questions
-- reset game
-
-*/
+/*-----------------------------------*\
+|* UofT Bootcamp 2019 -- Trivia Game *|
+\*-----------------------------------*/
 
 $(document).ready(function ($) {
 
@@ -30,11 +14,11 @@ $(document).ready(function ($) {
 
     //2. Declare variables for quiz counter
     var questionCounter = 0;
-    var correctAnswer = 0;
-    var wrongAnswer = 0;
-    var unanswered = 0;
+    var correctAnswerCounter = 0;
+    var wrongAnswerCounter = 0;
+    var unansweredCounter = 0;
 
-    //3. Declare variables for question 
+    //3. Declare variables for question tracking
     var questions;
     var currentQuestion;
 
@@ -48,7 +32,7 @@ $(document).ready(function ($) {
             questions = data;
         })
         .fail(function () {
-            console.log('something went wrong');
+            console.log('ERROR: Request Failed');
         });
 
 
@@ -56,59 +40,46 @@ $(document).ready(function ($) {
     //=========================================================================================================
 
     //1. Hide div on load
-    $('#trivia-game, #scores').hide();
+    $('#triviaGame, #scores').hide();
 
-    //2. When you click #btn-start-game
-    $(document).on('click', '.btn-start-game', function () {
-        $('#start-game').hide();
-        $('#trivia-game').show();
+    //2. When click btnStartGame
+    $(document).on('click', '.btnStartGame', function () {
+        $('#triviaGame').show();
+        $('#scores').hide();
+        $('.instructions').hide();
+        $('.btnStartGame').hide();
         displayQuestion();
     });
 
-    //3. When answer is clicked
-    $(document).on('click', '.answer', function () {
-        $(this).addClass('btn-active');
-        var guess = $(this).text();
-        checkGuess(guess, currentQuestion);
-    });
-
-    //4. Generates each question
+    //3. Generate questions
     function displayQuestion() {
 
-        //4.1. Call resetCounter function
+        //3.1. Call resetCounter function
         resetCounter();
 
-        //4.2. Check to see if game is over if no more questions
+        //3.2. Check to see if game is over if no more questions
         if (questionCounter === questions.length) {
             stopTimer();
-            showScore();
+            displayScore();
             return;
         }
 
-        //4.3. Setup currentQuestion
+        //3.3. Setup currentQuestion
         currentQuestion = questions[questionCounter];
 
-        //4.4. Run startTimer function every second if not currently running
+        //3.4. Run startTimer function every second if not currently running
         if (!counterRunning) {
             counterInterval = setInterval(startTimer, 1000);
             counterRunning = true;
         }
 
-        //4.5. Run function to display current question
+        //3.5. Run function to display current question
         displayCurrentQuestion(currentQuestion);
-
     }
 
-    //5. Reset Counter function
-    function resetCounter() {
-        counter = 10;
-        $('#right-answer, #wrong-answer, #time-out').hide();
-        $('#timer-interval').html(counter);
-    }
-
-    //6. Display current question and answer choices
+    //4. Display current question and answer choices
     function displayCurrentQuestion(question) {
-        $('#trivia-game');
+        $('#triviaGame');
         $('#question').text(question.question);
         $('#answers').empty();
 
@@ -116,70 +87,83 @@ $(document).ready(function ($) {
             var answerDiv = $('<div class="answer btn btn-answer">').text(item);
             $('#answers').append(answerDiv);
         });
-
     }
 
-    //7. Starts Timer
-    function startTimer() {
-        counter--;
-        $('#timer-interval').html(counter);
+    //5. When answer is clicked
+    $(document).on('click', '.answer', function () {
+        $(this).addClass('btnActive');
+        var guess = $(this).text();
+        checkGuess(guess, currentQuestion);
+    });
 
-        if (counter === 0) {
-            unanswered++;
-            $('#time-out').show().text('Time Up. No Soup For You!');
-            nextQuestion();
-        }
-    }
-
-    //8. Stops Timer
-    function stopTimer() {
-        clearInterval(counterInterval);
-        counterRunning = false;
-    }
-
-    //9. Checks if guess is correct
+    //6. Checks if guess is correct
     function checkGuess(guess, question) {
         var correctNumber = question.correctAnswer;
         var correct = question.choices[correctNumber];
 
-        //9.1. Shows #right-answer/#wrong-answer div depending on guess
+        //6.1. Shows correctAnswer / wrongAnswer div depending on guess
         if (guess === correct) {
-            correctAnswer++;
-            $('#right-answer').show();
-            $('#right-answer').text("That's CORRECT!");
+            correctAnswerCounter++;
+            $('#correctAnswer').show();
+            $('#correctAnswer').text("That's CORRECT!");
         } else {
-            wrongAnswer++;
-            $('#wrong-answer').show();
-            $('#wrong-answer').text("That's WRONG! The correct answer is: " + correct);
+            wrongAnswerCounter++;
+            $('#wrongAnswer').show();
+            $('#wrongAnswer').text("That's WRONG! The correct answer is: " + correct);
         }
 
         nextQuestion();
-
     }
 
-    //10. Show the next question in questions array
+    //7. Show the next question in questions array
     function nextQuestion() {
         stopTimer();
         questionCounter++;
         setTimeout(displayQuestion, 2000);
     }
 
-    //11. Show Score
-    function showScore() {
+    //8. Start timer
+    function startTimer() {
+        counter--;
+        $('#timerInterval').html(counter);
 
-        $('.trivia-logo').text('Final Score');
-        $('#start-game, #scores').show();
-        $('#trivia-game').hide();
+        if (counter === 0) {
+            unansweredCounter++;
+            $('#unanswered').show().text('Time Up. No Soup For You!');
+            nextQuestion();
+        }
+    }
 
-        $('.wrong-answer span').text(wrongAnswer);
-        $('.right-answer span').text(correctAnswer);
-        $('.time-out span').text(unanswered);
+    //9. Stop timer
+    function stopTimer() {
+        clearInterval(counterInterval);
+        counterRunning = false;
+    }
+
+    //10. Reset timer
+    function resetCounter() {
+        counter = 10;
+        $('#correctAnswer, #wrongAnswer, #unanswered').hide();
+        $('#timerInterval').html(counter);
+    }
+
+    //11. Display score
+    function displayScore() {
+
+        $('.triviaLogo').text('Final Score');
+        $('#scores').show();
+        $('#triviaGame, .instructions').hide();
+
+        $('.wrongAnswer span').text(wrongAnswerCounter);
+        $('.correctAnswer span').text(correctAnswerCounter);
+        $('.unanswered span').text(unansweredCounter);
 
         questionCounter = 0;
-        correctAnswer = 0;
-        wrongAnswer = 0;
-        unanswered = 0;
+        correctAnswerCounter = 0;
+        wrongAnswerCounter = 0;
+        unansweredCounter = 0;
 
+        $('.btnStartGame').text('Play Again').show();
     }
 
 });
