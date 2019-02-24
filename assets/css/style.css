@@ -1,3 +1,9 @@
+.container {
+	margin: 0 auto;
+  	font-family: 'Lato', sans-serif;
+  	font-size: 16px;
+}
+
 .btn {
 	font-weight: bold;
 	text-align: center;
@@ -8,29 +14,72 @@
 	border-color: #000;
 	background-color: #fff;
 }
+
 .btn:hover,
-.btn-active  {
+.btnActive  {
 	color: #fff;
 	border-color: #72bec9;
 	background-color: #8cccd5;
 }
 
-@media ( min-width: 768px ) {
-	.btn-answer {
-		float: left;
-		width: 48%;
-    }
+footer {
+  	display: flex;
+  	justify-content: center;
+  	padding: 10px;
+}
+
+@media ( min-width: 576px ) {
+	.btnAnswer {
+	float: left;
+	width: 48%;
+  	}
 	.score {
-		float: left;
-		width: 32%;
+	float: left;
+	width: 32%;
 	}
-	.btn-start-game {
-		width: 32%;
+	.btnStartGame {
+	width: 32%;
 	}
 }
 
-#footer {
-    display: flex;
-    justify-content: center;
-    padding: 10px;
+@media ( min-width: 768px ) {
+	.btnAnswer {
+	float: left;
+	width: 48%;
+  	}
+	.score {
+	float: left;
+	width: 32%;
+	}
+	.btnStartGame {
+	width: 32%;
+	}
+}
+
+@media ( min-width: 768px ) {
+	.btnAnswer {
+	float: left;
+	width: 48%;
+  	}
+	.score {
+	float: left;
+	width: 32%;
+	}
+	.btnStartGame {
+	width: 32%;
+	}
+}
+
+@media ( min-width: 992px ) {
+	.btnAnswer {
+	float: left;
+	width: 48%;
+  	}
+	.score {
+	float: left;
+	width: 32%;
+	}
+	.btnStartGame {
+	width: 32%;
+	}
 }
