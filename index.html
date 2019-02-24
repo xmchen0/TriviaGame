@@ -9,8 +9,9 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <!--Link to Google Fonts-->
     <link href="https://fonts.googleapis.com/css?family=Lato|Sacramento" rel="stylesheet">
-     <!--Link to Bootstrap-->
-     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!--Link to Bootstrap-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <!--Link to jQuery Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!--Link to JavaScript File-->
@@ -21,49 +22,49 @@
 
 <body>
     <div class="container">
-        <!--Heading-->
-        <div id="start-game" class="trivia-container">
-            <div class="trivia-header">
-                <h1 class="trivia-logo">Seinfeld Trivia <br> Test your Seinfeld IQ</h1>
+        <div class="row">
+            <!--Heading-->
+            <div class="jumbotron text-center">
+                <h1 class="triviaLogo">Seinfeld Trivia</h1>
+                <h3>Test your Seinfeld IQ</h3>
             </div>
             <!--Instructions-->
-            <div id="instructions">
-                <h4>Guess who said this memorable quote from Seinfeld. <br>
-                    Total number of questions: 10. <br>
-                    You have 10 seconds to answer each question. <br>
-                    There are 4 answer choices and you must only pick 1. <br>
-                    Try answer all questions. <br>
-                    Final scores will be displayed at the end of the quiz. <br>
-                    When you click "Start Game" the timer will begin ticking and Q+A will on load. <br>
-                    Good luck and have fun! <br>
-                </h4>
+            <div class="instructions">
+                <p>Guess who said this memorable quote from Seinfeld.</p>
+                <p>Total number of questions: 10.</p>
+                <p>You have 10 seconds to answer each question.</p>
+                <p>There are 4 answer choices and you must only pick 1.</p>
+                <p>Try answer all questions.</p>
+                <p>Final scores will be displayed at the end of the quiz.</p>
+                <p>When you click "Start Game" the timer will begin ticking, Q+A will on load and there will be no
+                    restarting.</p>
+                <p><strong>Good luck and have fun!</strong></p>
             </div>
-            <!--Scoreboard Counter-->
-            <div class="trivia-body">
+            <div id="startGame">
+                <!--Start/Reset Button-->
+                <div id="btn btnStartGame" class="btn btnStartGame btn-lg">Start Game</div>
+                <!--Results-->
                 <div id="scores">
-                    <div class="score wrong-answer">Wrong Answers: <span>0</span></div>
-                    <div class="score right-answer">Correct Answers: <span>0</span></div>
-                    <div class="score time-out">Unanswered: <span>0</span></div>
+                    <h2><strong>Here's how you did:</strong></h2>
+                    <div class="score wrongAnswer">Wrong Answers: <span>0</span></div>
+                    <div class="score correctAnswer">Correct Answers: <span>0</span></div>
+                    <div class="score unanswered">Unanswered: <span>0</span></div>
                 </div>
-                <div id="btn-start-game" class="btn btn-start-game">Start Game</div>
             </div>
-        </div>
-        <!--Trivia Q and A-->
-        <div id="trivia-game" class="trivia-container">
-            <div class="trivia-header">
+            <div id="triviaGame">
+                <!--Trivia Q and A-->
                 <h1 id="question"></h1>
                 <h3 id="answers"></h3>
                 <!--Timer-->
-                <div id="timer" class="timer">
-                    <div>Time Remaining:</div>
-                    <div id="timer-interval" class="timer-interval">10</div>
+                <div id="timer">
+                    <div>Time Remaining: </div>
+                    <div id="timerInterval">10</div>
                 </div>
+                <!--Scoreboard Counter-->
+                <div id="wrongAnswer" class="wrongAnswer"></div>
+                <div id="correctAnswer" class="correctAnswer"></div>
+                <div id="unanswered"></div>
             </div>
-            <!--Results-->
-            <div id="choices" class="trivia-body"></div>
-            <div id="wrong-answer" class="wrong-answer"></div>
-            <div id="right-answer" class="right-answer"></div>
-            <div id="time-out" class="time-out"></div>
         </div>
     </div>
     <!--Footer-->
