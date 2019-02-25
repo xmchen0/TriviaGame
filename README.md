@@ -1,5 +1,7 @@
 # TriviaGame
 
+<a href="http://g.recordit.co/4mte9WTCxJ.gif"><img src="https://media.giphy.com/media/9Ji0xt6JqOCkuentdS/giphy.gif" border="0"></a>
+
 ## Basic Features
 * Guess who said this memorable quote from Seinfeld.
 * Total number of questions: 10. 
